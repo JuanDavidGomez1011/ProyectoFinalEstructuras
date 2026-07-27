@@ -1,15 +1,13 @@
 package modelo;
 
-public class Partida {
-    public Jugador jugador1;
-    public Jugador jugador2;
-    public String resultado;
-    public int puntosExtra;
+public class Jugador {
+    public String nombre;
+    public String cedula;
+    public int puntaje;
 
-    public Partida(Jugador jugador1, Jugador jugador2, String resultado, int puntosExtra) {
-        this.jugador1 = jugador1;
-        this.jugador2 = jugador2;
-        this.resultado = resultado;
-        this.puntosExtra = puntosExtra;
+    public Jugador(String nombre, String cedula) {
+        this.nombre = nombre;
+        this.cedula = cedula;
+        this.puntaje = 0;
     }
 }
