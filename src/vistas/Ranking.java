@@ -1,5 +1,7 @@
 package vistas;
 
+import estructuras.ArbolRankings;
+
 import javax.swing.*;
 
 public class Ranking extends JFrame {
@@ -8,7 +10,11 @@ public class Ranking extends JFrame {
     private JButton actualizarButton;
     private JButton regresarButton;
 
-    public Ranking() {
+    private ArbolRankings arbol;
+
+    public Ranking(ArbolRankings arbol) {
+
+        this.arbol = arbol;
 
         setTitle("Ranking");
         setContentPane(panel1);
@@ -17,10 +23,24 @@ public class Ranking extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        actualizarButton.addActionListener(e ->
-                JOptionPane.showMessageDialog(this,
-                        "Ranking actualizado."));
+        actualizarButton.addActionListener(e -> mostrarRanking());
 
         regresarButton.addActionListener(e -> dispose());
+    }
+
+    private void mostrarRanking() {
+
+        String ranking = arbol.obtenerRanking();
+
+        if (ranking.isEmpty()) {
+            ranking = "No hay jugadores registrados.";
+        }
+
+        JOptionPane.showMessageDialog(
+                this,
+                ranking,
+                "Ranking de Jugadores",
+                JOptionPane.INFORMATION_MESSAGE
+        );
     }
 }

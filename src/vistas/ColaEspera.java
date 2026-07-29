@@ -1,5 +1,7 @@
 package vistas;
 
+import estructuras.ColaJugadores;
+
 import javax.swing.*;
 
 public class ColaEspera extends JFrame {
@@ -8,7 +10,11 @@ public class ColaEspera extends JFrame {
     private JButton actualizarButton;
     private JButton regresarButton;
 
-    public ColaEspera() {
+    private ColaJugadores cola;
+
+    public ColaEspera(ColaJugadores cola) {
+
+        this.cola = cola;
 
         setTitle("Cola de Espera");
         setContentPane(panel1);
@@ -17,10 +23,20 @@ public class ColaEspera extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        actualizarButton.addActionListener(e ->
-                JOptionPane.showMessageDialog(this,
-                        "Cola de espera actualizada."));
+        actualizarButton.addActionListener(e -> mostrarCola());
 
         regresarButton.addActionListener(e -> dispose());
+    }
+
+    private void mostrarCola() {
+
+        String texto = cola.mostrarCola();
+
+        JOptionPane.showMessageDialog(
+                this,
+                texto,
+                "Jugadores en Espera",
+                JOptionPane.INFORMATION_MESSAGE
+        );
     }
 }

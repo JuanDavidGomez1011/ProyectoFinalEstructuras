@@ -2,11 +2,9 @@ package estructuras;
 
 import modelo.Jugador;
 
-public class ArbolRanking {
+public class ArbolRankings {
 
     public NodoArbol raiz;
-
-    // INSERTAR
     public void insertar(Jugador jugador) {
         if (raiz == null) {
             raiz = new NodoArbol(jugador);
@@ -36,8 +34,6 @@ public class ArbolRanking {
             }
         }
     }
-
-    // BUSCAR
     public Jugador buscar(String cedula) {
         return buscarRec(raiz, cedula);
     }
@@ -58,7 +54,6 @@ public class ArbolRanking {
         return buscarRec(nodo.derecho, cedula);
     }
 
-    // MOSTRAR RANKING POR CONSOLA
     public void inOrder() {
         System.out.println("===== RANKING =====");
         inOrderRec(raiz);
@@ -80,8 +75,6 @@ public class ArbolRanking {
             inOrderRec(nodo.derecho);
         }
     }
-
-    // DEVOLVER RANKING COMO TEXTO
     public String obtenerRanking() {
 
         StringBuilder sb = new StringBuilder();
@@ -108,8 +101,6 @@ public class ArbolRanking {
             obtenerRankingRec(nodo.derecho, sb);
         }
     }
-
-    // ELIMINAR
     public void eliminar(Jugador jugador) {
         raiz = eliminarRec(raiz, jugador);
     }
@@ -156,7 +147,6 @@ public class ArbolRanking {
         return nodo;
     }
 
-    // ACTUALIZAR PUNTAJE
     public void actualizarPuntaje(Jugador jugador, int nuevoPuntaje) {
 
         eliminar(jugador);

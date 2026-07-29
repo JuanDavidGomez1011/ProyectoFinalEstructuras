@@ -1,5 +1,9 @@
 package vistas;
 
+import estructuras.ArbolRankings;
+import estructuras.ColaJugadores;
+import modelo.Jugador;
+
 import javax.swing.*;
 
 public class RegistrarJugador extends JFrame {
@@ -11,7 +15,13 @@ public class RegistrarJugador extends JFrame {
     private JButton limpiarButton;
     private JButton regresarButton;
 
-    public RegistrarJugador() {
+    private ColaJugadores cola;
+    private ArbolRankings arbol;
+
+    public RegistrarJugador(ColaJugadores cola, ArbolRankings arbol) {
+
+        this.cola = cola;
+        this.arbol = arbol;
 
         setTitle("Registrar Jugador");
         setContentPane(panel1);
@@ -31,8 +41,22 @@ public class RegistrarJugador extends JFrame {
                 return;
             }
 
+            if (arbol.buscar(cedula) != null) {
+                JOptionPane.showMessageDialog(this,
+                        "La cédula ya está registrada.");
+                return;
+            }
+
+            Jugador jugador = new Jugador(nombre, cedula);
+
+            cola.enqueue(jugador);
+            arbol.insertar(jugador);
+
             JOptionPane.showMessageDialog(this,
                     "Jugador registrado correctamente.");
+
+            textField1.setText("");
+            textField2.setText("");
         });
 
         limpiarButton.addActionListener(e -> {

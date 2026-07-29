@@ -1,5 +1,6 @@
 package vistas;
 
+import estructuras.ArbolRankings;
 import javax.swing.*;
 
 public class ArbolRanking extends JFrame {
@@ -8,7 +9,11 @@ public class ArbolRanking extends JFrame {
     private JButton mostarButton;
     private JButton regresarButton;
 
-    public ArbolRanking() {
+    private ArbolRankings arbol;
+
+    public ArbolRanking(ArbolRankings arbol) {
+
+        this.arbol = arbol;
 
         setTitle("Árbol de Ranking");
         setContentPane(panel1);
@@ -17,12 +22,10 @@ public class ArbolRanking extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        mostarButton.addActionListener(e ->
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Árbol de ranking mostrado."
-                )
-        );
+        mostarButton.addActionListener(e -> {
+            JOptionPane.showMessageDialog(this,
+                    arbol.obtenerRanking());
+        });
 
         regresarButton.addActionListener(e -> dispose());
     }

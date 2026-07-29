@@ -1,13 +1,13 @@
 package controladores;
 
-import estructuras.ArbolRanking;
+import estructuras.ArbolRankings;
 import estructuras.ColaJugadores;
 import estructuras.ListaPartidas;
 
 public class PrincipalController {
 
     public ColaJugadores colaEspera;
-    public ArbolRanking arbolRanking;
+    public ArbolRankings arbolRanking;
     public ListaPartidas historialPartidas;
 
     public JugadorController jugadorController;
@@ -16,7 +16,7 @@ public class PrincipalController {
     public PrincipalController() {
 
         colaEspera = new ColaJugadores();
-        arbolRanking = new ArbolRanking();
+        arbolRanking = new ArbolRankings();
         historialPartidas = new ListaPartidas();
 
         jugadorController = new JugadorController(this);

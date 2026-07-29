@@ -1,5 +1,7 @@
 package vistas;
 
+import estructuras.ListaPartidas;
+
 import javax.swing.*;
 
 public class Historial extends JFrame {
@@ -8,7 +10,11 @@ public class Historial extends JFrame {
     private JButton actualizarButton;
     private JButton regresarButton;
 
-    public Historial() {
+    private ListaPartidas historial;
+
+    public Historial(ListaPartidas historial) {
+
+        this.historial = historial;
 
         setTitle("Historial");
         setContentPane(panel1);
@@ -17,10 +23,20 @@ public class Historial extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        actualizarButton.addActionListener(e ->
-                JOptionPane.showMessageDialog(this,
-                        "Historial actualizado correctamente."));
+        actualizarButton.addActionListener(e -> mostrarHistorial());
 
         regresarButton.addActionListener(e -> dispose());
+    }
+
+    private void mostrarHistorial() {
+
+        String texto = historial.mostrarHistorial();
+
+        JOptionPane.showMessageDialog(
+                this,
+                texto,
+                "Historial de Partidas",
+                JOptionPane.INFORMATION_MESSAGE
+        );
     }
 }
