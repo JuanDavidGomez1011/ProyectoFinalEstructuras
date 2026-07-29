@@ -6,20 +6,25 @@ import estructuras.ListaPartidas;
 
 public class PrincipalController {
 
-    public ColaJugadores colaEspera;
-    public ArbolRankings arbolRanking;
-    public ListaPartidas historialPartidas;
-
-    public JugadorController jugadorController;
-    public PartidaController partidaController;
+    private ColaJugadores colaJugadores;
+    private ArbolRankings arbolRankings;
+    private ListaPartidas historialPartidas;
 
     public PrincipalController() {
+        this.colaJugadores = new ColaJugadores();
+        this.arbolRankings = new ArbolRankings();
+        this.historialPartidas = new ListaPartidas();
+    }
 
-        colaEspera = new ColaJugadores();
-        arbolRanking = new ArbolRankings();
-        historialPartidas = new ListaPartidas();
+    public ColaJugadores getColaJugadores() {
+        return colaJugadores;
+    }
 
-        jugadorController = new JugadorController(this);
-        partidaController = new PartidaController(this);
+    public ArbolRankings getArbolRankings() {
+        return arbolRankings;
+    }
+
+    public ListaPartidas getHistorialPartidas() {
+        return historialPartidas;
     }
 }
