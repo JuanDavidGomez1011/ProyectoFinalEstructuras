@@ -4,46 +4,42 @@ import javax.swing.*;
 
 public class RegistrarJugador extends JFrame {
 
-    private JPanel panelPrincipal;
-    private JTextField txtNombre;
-    private JTextField txtCedula;
-    private JButton btnRegistrar;
-    private JButton btnLimpiar;
-    private JButton btnRegresar;
+    private JPanel panel1;
+    private JTextField textField1;
+    private JTextField textField2;
+    private JButton registrarButton;
+    private JButton limpiarButton;
+    private JButton regresarButton;
 
     public RegistrarJugador() {
 
         setTitle("Registrar Jugador");
-        setContentPane(panelPrincipal);
-        setSize(450,350);
+        setContentPane(panel1);
+        setSize(450, 350);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        btnRegistrar.addActionListener(e -> {
+        registrarButton.addActionListener(e -> {
 
-            String nombre = txtNombre.getText().trim();
-            String cedula = txtCedula.getText().trim();
+            String nombre = textField1.getText().trim();
+            String cedula = textField2.getText().trim();
 
-            if(nombre.isEmpty() || cedula.isEmpty()){
-
+            if (nombre.isEmpty() || cedula.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
                         "Complete todos los campos.");
-
                 return;
             }
 
             JOptionPane.showMessageDialog(this,
                     "Jugador registrado correctamente.");
-
         });
 
-        btnLimpiar.addActionListener(e -> {
-            txtNombre.setText("");
-            txtCedula.setText("");
+        limpiarButton.addActionListener(e -> {
+            textField1.setText("");
+            textField2.setText("");
         });
 
-        btnRegresar.addActionListener(e -> dispose());
-
+        regresarButton.addActionListener(e -> dispose());
     }
 }

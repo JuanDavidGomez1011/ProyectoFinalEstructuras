@@ -2,24 +2,24 @@ package vistas;
 
 import javax.swing.*;
 
-public class ColaEspera extends JFrame {
+public class EmparejarJugador extends JFrame {
 
     private JPanel panel1;
-    private JButton actualizarButton;
+    private JButton EmparejarButton;
     private JButton regresarButton;
 
-    public ColaEspera() {
+    public EmparejarJugador() {
 
-        setTitle("Cola de Espera");
+        setTitle("Emparejar Jugadores");
         setContentPane(panel1);
-        setSize(450, 350);
+        setSize(400, 250);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        actualizarButton.addActionListener(e ->
+        EmparejarButton.addActionListener(e ->
                 JOptionPane.showMessageDialog(this,
-                        "Cola de espera actualizada."));
+                        "Jugadores emparejados correctamente."));
 
         regresarButton.addActionListener(e -> dispose());
     }

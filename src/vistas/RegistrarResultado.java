@@ -4,27 +4,23 @@ import javax.swing.*;
 
 public class RegistrarResultado extends JFrame {
 
-    private JPanel panelPrincipal;
-    private JTextField txtJugador1;
-    private JTextField txtJugador2;
-    private JRadioButton rbJugador1;
-    private JRadioButton rbJugador2;
-    private JRadioButton rbEmpate;
-    private JButton btnGuardar;
-    private JButton btnRegresar;
+    private JPanel panel1;
+    private JButton registarButton;
+    private JButton regresarButton;
 
     public RegistrarResultado() {
 
         setTitle("Registrar Resultado");
-        setContentPane(panelPrincipal);
-        setSize(450,350);
+        setContentPane(panel1);
+        setSize(400, 250);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
-        btnRegresar.addActionListener(e -> dispose());
-
-        btnGuardar.addActionListener(e ->
+        registarButton.addActionListener(e ->
                 JOptionPane.showMessageDialog(this,
                         "Resultado registrado correctamente."));
+
+        regresarButton.addActionListener(e -> dispose());
     }
 }
