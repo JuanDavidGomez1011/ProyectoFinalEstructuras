@@ -15,9 +15,22 @@ public class ArbolRankings {
 
     private void insertarRec(NodoArbol nodo, Jugador jugador) {
 
+        int comparacionCedulas = 0;
+        String c1 = jugador.cedula;
+        String c2 = nodo.jugador.cedula;
+        int minLen = c1.length() < c2.length() ? c1.length() : c2.length();
+        for (int i = 0; i < minLen; i++) {
+            if (c1.charAt(i) != c2.charAt(i)) {
+                comparacionCedulas = c1.charAt(i) - c2.charAt(i);
+                break;
+            }
+        }
+        if (comparacionCedulas == 0) {
+            comparacionCedulas = c1.length() - c2.length();
+        }
+
         if (jugador.puntaje > nodo.jugador.puntaje ||
-                (jugador.puntaje == nodo.jugador.puntaje &&
-                        jugador.cedula.compareTo(nodo.jugador.cedula) > 0)) {
+                (jugador.puntaje == nodo.jugador.puntaje && comparacionCedulas > 0)) {
 
             if (nodo.derecho == null) {
                 nodo.derecho = new NodoArbol(jugador);
@@ -43,7 +56,19 @@ public class ArbolRankings {
         if (nodo == null)
             return null;
 
-        if (nodo.jugador.cedula.equals(cedula))
+        boolean sonIguales = true;
+        if (nodo.jugador.cedula.length() != cedula.length()) {
+            sonIguales = false;
+        } else {
+            for (int i = 0; i < cedula.length(); i++) {
+                if (nodo.jugador.cedula.charAt(i) != cedula.charAt(i)) {
+                    sonIguales = false;
+                    break;
+                }
+            }
+        }
+
+        if (sonIguales)
             return nodo.jugador;
 
         Jugador encontrado = buscarRec(nodo.izquierdo, cedula);
@@ -77,29 +102,31 @@ public class ArbolRankings {
     }
     public String obtenerRanking() {
 
-        StringBuilder sb = new StringBuilder();
+        String resultado = "";
 
-        obtenerRankingRec(raiz, sb);
+        resultado = obtenerRankingRec(raiz, resultado);
 
-        return sb.toString();
+        return resultado;
     }
 
-    private void obtenerRankingRec(NodoArbol nodo, StringBuilder sb) {
+    private String obtenerRankingRec(NodoArbol nodo, String acumulado) {
 
         if (nodo != null) {
 
-            obtenerRankingRec(nodo.izquierdo, sb);
+            acumulado = obtenerRankingRec(nodo.izquierdo, acumulado);
 
-            sb.append("Nombre: ")
-                    .append(nodo.jugador.nombre)
-                    .append(" | Cédula: ")
-                    .append(nodo.jugador.cedula)
-                    .append(" | Puntaje: ")
-                    .append(nodo.jugador.puntaje)
-                    .append("\n");
+            acumulado = acumulado + "Nombre: " +
+                    nodo.jugador.nombre +
+                    " | Cédula: " +
+                    nodo.jugador.cedula +
+                    " | Puntaje: " +
+                    nodo.jugador.puntaje +
+                    "\n";
 
-            obtenerRankingRec(nodo.derecho, sb);
+            acumulado = obtenerRankingRec(nodo.derecho, acumulado);
         }
+
+        return acumulado;
     }
     public void eliminar(Jugador jugador) {
         raiz = eliminarRec(raiz, jugador);
@@ -110,15 +137,27 @@ public class ArbolRankings {
         if (nodo == null)
             return null;
 
+        int comparacionCedulas = 0;
+        String c1 = jugador.cedula;
+        String c2 = nodo.jugador.cedula;
+        int minLen = c1.length() < c2.length() ? c1.length() : c2.length();
+        for (int i = 0; i < minLen; i++) {
+            if (c1.charAt(i) != c2.charAt(i)) {
+                comparacionCedulas = c1.charAt(i) - c2.charAt(i);
+                break;
+            }
+        }
+        if (comparacionCedulas == 0) {
+            comparacionCedulas = c1.length() - c2.length();
+        }
+
         if (jugador.puntaje > nodo.jugador.puntaje ||
-                (jugador.puntaje == nodo.jugador.puntaje &&
-                        jugador.cedula.compareTo(nodo.jugador.cedula) > 0)) {
+                (jugador.puntaje == nodo.jugador.puntaje && comparacionCedulas > 0)) {
 
             nodo.derecho = eliminarRec(nodo.derecho, jugador);
 
         } else if (jugador.puntaje < nodo.jugador.puntaje ||
-                (jugador.puntaje == nodo.jugador.puntaje &&
-                        jugador.cedula.compareTo(nodo.jugador.cedula) < 0)) {
+                (jugador.puntaje == nodo.jugador.puntaje && comparacionCedulas < 0)) {
 
             nodo.izquierdo = eliminarRec(nodo.izquierdo, jugador);
 

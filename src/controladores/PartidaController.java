@@ -24,8 +24,42 @@ public class PartidaController {
 
         Jugador ganadorJugador = null;
 
-        if (resultado.contains("Victoria")) {
-            if (resultado.contains(jugador1.nombre)) {
+        boolean contieneVictoria = false;
+        String palabraBusqueda = "Victoria";
+        for (int i = 0; i <= resultado.length() - palabraBusqueda.length(); i++) {
+            boolean coincide = true;
+            for (int j = 0; j < palabraBusqueda.length(); j++) {
+                if (resultado.charAt(i + j) != palabraBusqueda.charAt(j)) {
+                    coincide = false;
+                    break;
+                }
+            }
+            if (coincide) {
+                contieneVictoria = true;
+                break;
+            }
+        }
+
+        if (contieneVictoria) {
+            boolean contieneJ1 = false;
+            String nombreJ1 = jugador1.nombre;
+            if (nombreJ1.length() <= resultado.length()) {
+                for (int i = 0; i <= resultado.length() - nombreJ1.length(); i++) {
+                    boolean coincide = true;
+                    for (int j = 0; j < nombreJ1.length(); j++) {
+                        if (resultado.charAt(i + j) != nombreJ1.charAt(j)) {
+                            coincide = false;
+                            break;
+                        }
+                    }
+                    if (coincide) {
+                        contieneJ1 = true;
+                        break;
+                    }
+                }
+            }
+
+            if (contieneJ1) {
                 ganadorJugador = jugador1;
                 jugador1.puntaje += 3 + extra1;
                 jugador2.puntaje += extra2;

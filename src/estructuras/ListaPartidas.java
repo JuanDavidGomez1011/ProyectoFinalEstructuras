@@ -74,29 +74,29 @@ public class ListaPartidas {
             return "No hay partidas registradas.";
         }
 
-        StringBuilder sb = new StringBuilder();
+        String acumulado = "";
 
         NodoLista actual = primero;
 
         while (actual != null) {
 
-            sb.append("Jugador 1: ")
-                    .append(actual.partida.jugador1.nombre)
-                    .append("\n");
+            acumulado = acumulado + "Jugador 1: " +
+                    actual.partida.jugador1.nombre +
+                    "\n";
 
-            sb.append("Jugador 2: ")
-                    .append(actual.partida.jugador2.nombre)
-                    .append("\n");
+            acumulado = acumulado + "Jugador 2: " +
+                    actual.partida.jugador2.nombre +
+                    "\n";
 
-            sb.append("Ganador: ")
-                    .append(actual.partida.ganador)
-                    .append("\n");
+            acumulado = acumulado + "Ganador: " +
+                    actual.partida.ganador +
+                    "\n";
 
-            sb.append("---------------------------------\n");
+            acumulado = acumulado + "---------------------------------\n";
 
             actual = actual.siguiente;
         }
 
-        return sb.toString();
+        return acumulado;
     }
 }

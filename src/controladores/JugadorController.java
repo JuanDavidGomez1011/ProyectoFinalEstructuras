@@ -16,7 +16,17 @@ public class JugadorController {
     }
 
     public boolean inscribir(String nombre, String cedula) {
-        if (cedula == null || cedula.trim().length() < 5) {
+        if (cedula == null) {
+            JOptionPane.showMessageDialog(null, "La cédula es demasiado corta.");
+            return false;
+        }
+
+        int longitudCedula = 0;
+        for (int i = 0; i < cedula.length(); i++) {
+            longitudCedula++;
+        }
+
+        if (longitudCedula < 5) {
             JOptionPane.showMessageDialog(null, "La cédula es demasiado corta.");
             return false;
         }
@@ -26,7 +36,23 @@ public class JugadorController {
             return false;
         }
 
-        Jugador nuevoJugador = new Jugador(nombre.trim(), cedula.trim());
+        String nombreLimpio = "";
+        for (int i = 0; i < nombre.length(); i++) {
+            char c = nombre.charAt(i);
+            if (!(i == 0 && c == ' ') && !(i == nombre.length() - 1 && c == ' ')) {
+                nombreLimpio += c;
+            }
+        }
+
+        String cedulaLimpia = "";
+        for (int i = 0; i < cedula.length(); i++) {
+            char c = cedula.charAt(i);
+            if (!(i == 0 && c == ' ') && !(i == cedula.length() - 1 && c == ' ')) {
+                cedulaLimpia += c;
+            }
+        }
+
+        Jugador nuevoJugador = new Jugador(nombreLimpio, cedulaLimpia);
         arbol.insertar(nuevoJugador);
         cola.enqueue(nuevoJugador);
 
@@ -35,7 +61,19 @@ public class JugadorController {
     }
 
     public boolean retirar(String cedula) {
-        if (cedula == null || cedula.trim().isEmpty()) {
+        if (cedula == null) {
+            return false;
+        }
+
+        boolean esVacia = true;
+        for (int i = 0; i < cedula.length(); i++) {
+            if (cedula.charAt(i) != ' ') {
+                esVacia = false;
+                break;
+            }
+        }
+
+        if (esVacia) {
             return false;
         }
 

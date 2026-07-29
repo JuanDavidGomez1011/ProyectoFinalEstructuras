@@ -60,7 +60,19 @@ public class ColaJugadores {
             return false;
         }
 
-        if (frente.jugador.cedula.equals(cedula)) {
+        boolean sonIgualesFrente = true;
+        if (frente.jugador.cedula.length() != cedula.length()) {
+            sonIgualesFrente = false;
+        } else {
+            for (int i = 0; i < cedula.length(); i++) {
+                if (frente.jugador.cedula.charAt(i) != cedula.charAt(i)) {
+                    sonIgualesFrente = false;
+                    break;
+                }
+            }
+        }
+
+        if (sonIgualesFrente) {
             dequeue();
             return true;
         }
@@ -70,7 +82,19 @@ public class ColaJugadores {
 
         while (actual != null) {
 
-            if (actual.jugador.cedula.equals(cedula)) {
+            boolean sonIgualesActual = true;
+            if (actual.jugador.cedula.length() != cedula.length()) {
+                sonIgualesActual = false;
+            } else {
+                for (int i = 0; i < cedula.length(); i++) {
+                    if (actual.jugador.cedula.charAt(i) != cedula.charAt(i)) {
+                        sonIgualesActual = false;
+                        break;
+                    }
+                }
+            }
+
+            if (sonIgualesActual) {
 
                 anterior.siguiente = actual.siguiente;
 
@@ -107,23 +131,23 @@ public class ColaJugadores {
             return "No hay jugadores en espera.";
         }
 
-        StringBuilder sb = new StringBuilder();
+        String acumulado = "";
 
         NodoCola actual = frente;
 
         while (actual != null) {
 
-            sb.append("Nombre: ")
-                    .append(actual.jugador.nombre)
-                    .append(" | Cédula: ")
-                    .append(actual.jugador.cedula)
-                    .append(" | Puntaje: ")
-                    .append(actual.jugador.puntaje)
-                    .append("\n");
+            acumulado = acumulado + "Nombre: " +
+                    actual.jugador.nombre +
+                    " | Cédula: " +
+                    actual.jugador.cedula +
+                    " | Puntaje: " +
+                    actual.jugador.puntaje +
+                    "\n";
 
             actual = actual.siguiente;
         }
 
-        return sb.toString();
+        return acumulado;
     }
 }
