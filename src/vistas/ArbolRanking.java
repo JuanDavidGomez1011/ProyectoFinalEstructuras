@@ -20,10 +20,15 @@ public class ArbolRanking extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        mostarButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, arbol.obtenerRanking());
-        });
+        if (mostarButton != null) {
+            mostarButton.addActionListener(e -> {
+                String resultado = arbol.obtenerRanking();
+                JOptionPane.showMessageDialog(this, (resultado != null && !resultado.isEmpty()) ? resultado : "El árbol está vacío.");
+            });
+        }
 
-        regresarButton.addActionListener(e -> dispose());
+        if (regresarButton != null) {
+            regresarButton.addActionListener(e -> dispose());
+        }
     }
 }

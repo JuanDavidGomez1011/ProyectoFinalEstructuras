@@ -10,6 +10,7 @@ public class Ranking extends JFrame {
     private JButton actualizarButton;
     private JButton regresarButton;
     private ArbolRankings arbol;
+    private JTextArea txtArea;
 
     public Ranking(ArbolRankings arbol) {
         this.arbol = arbol;
@@ -19,18 +20,31 @@ public class Ranking extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        JTextArea txtArea = new JTextArea();
+        txtArea = new JTextArea();
         txtArea.setEditable(false);
 
-        if (panel1.getComponentCount() == 0) {
-            panel1.setLayout(new BorderLayout());
-            panel1.add(new JScrollPane(txtArea), BorderLayout.CENTER);
+        boolean encontradoEnForm = false;
+        for (java.awt.Component comp : panel1.getComponents()) {
+            if (comp instanceof JScrollPane) {
+                JScrollPane scroll = (JScrollPane) comp;
+                if (scroll.getViewport().getView() instanceof JTextArea) {
+                    txtArea = (JTextArea) scroll.getViewport().getView();
+                    encontradoEnForm = true;
+                    break;
+                }
+            }
         }
 
-        cargarRanking(txtArea);
+        if (!encontradoEnForm) {
+            panel1.setLayout(new BorderLayout());
+            panel1.add(new JScrollPane(txtArea), BorderLayout.CENTER);
+            panel1.revalidate();
+        }
+
+        cargarRanking();
 
         if (actualizarButton != null) {
-            actualizarButton.addActionListener(e -> cargarRanking(txtArea));
+            actualizarButton.addActionListener(e -> cargarRanking());
         }
 
         if (regresarButton != null) {
@@ -38,7 +52,7 @@ public class Ranking extends JFrame {
         }
     }
 
-    private void cargarRanking(JTextArea txtArea) {
+    private void cargarRanking() {
         if (arbol.raiz == null) {
             txtArea.setText("No hay jugadores registrados.");
         } else {

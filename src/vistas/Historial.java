@@ -10,6 +10,7 @@ public class Historial extends JFrame {
     private JButton actualizarButton;
     private JButton regresarButton;
     private ListaPartidas historial;
+    private JTextArea txtArea;
 
     public Historial(ListaPartidas historial) {
         this.historial = historial;
@@ -19,18 +20,31 @@ public class Historial extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        JTextArea txtArea = new JTextArea();
+        txtArea = new JTextArea();
         txtArea.setEditable(false);
 
-        if (panel1.getComponentCount() == 0) {
-            panel1.setLayout(new BorderLayout());
-            panel1.add(new JScrollPane(txtArea), BorderLayout.CENTER);
+        boolean encontradoEnForm = false;
+        for (java.awt.Component comp : panel1.getComponents()) {
+            if (comp instanceof JScrollPane) {
+                JScrollPane scroll = (JScrollPane) comp;
+                if (scroll.getViewport().getView() instanceof JTextArea) {
+                    txtArea = (JTextArea) scroll.getViewport().getView();
+                    encontradoEnForm = true;
+                    break;
+                }
+            }
         }
 
-        cargarHistorial(txtArea);
+        if (!encontradoEnForm) {
+            panel1.setLayout(new BorderLayout());
+            panel1.add(new JScrollPane(txtArea), BorderLayout.CENTER);
+            panel1.revalidate();
+        }
+
+        cargarHistorial();
 
         if (actualizarButton != null) {
-            actualizarButton.addActionListener(e -> cargarHistorial(txtArea));
+            actualizarButton.addActionListener(e -> cargarHistorial());
         }
 
         if (regresarButton != null) {
@@ -38,7 +52,7 @@ public class Historial extends JFrame {
         }
     }
 
-    private void cargarHistorial(JTextArea txtArea) {
+    private void cargarHistorial() {
         NodoLista actual = historial.primero;
         if (actual == null) {
             txtArea.setText("No hay partidas registradas.");

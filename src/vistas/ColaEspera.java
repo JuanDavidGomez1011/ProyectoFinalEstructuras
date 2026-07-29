@@ -10,6 +10,7 @@ public class ColaEspera extends JFrame {
     private JButton actualizarButton;
     private JButton regresarButton;
     private ColaJugadores cola;
+    private JTextArea txtArea;
 
     public ColaEspera(ColaJugadores cola) {
         this.cola = cola;
@@ -19,18 +20,31 @@ public class ColaEspera extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        JTextArea txtArea = new JTextArea();
+        txtArea = new JTextArea();
         txtArea.setEditable(false);
 
-        if (panel1.getComponentCount() == 0) {
-            panel1.setLayout(new BorderLayout());
-            panel1.add(new JScrollPane(txtArea), BorderLayout.CENTER);
+        boolean encontradoEnForm = false;
+        for (java.awt.Component comp : panel1.getComponents()) {
+            if (comp instanceof JScrollPane) {
+                JScrollPane scroll = (JScrollPane) comp;
+                if (scroll.getViewport().getView() instanceof JTextArea) {
+                    txtArea = (JTextArea) scroll.getViewport().getView();
+                    encontradoEnForm = true;
+                    break;
+                }
+            }
         }
 
-        cargarCola(txtArea);
+        if (!encontradoEnForm) {
+            panel1.setLayout(new BorderLayout());
+            panel1.add(new JScrollPane(txtArea), BorderLayout.CENTER);
+            panel1.revalidate();
+        }
+
+        cargarCola();
 
         if (actualizarButton != null) {
-            actualizarButton.addActionListener(e -> cargarCola(txtArea));
+            actualizarButton.addActionListener(e -> cargarCola());
         }
 
         if (regresarButton != null) {
@@ -38,7 +52,7 @@ public class ColaEspera extends JFrame {
         }
     }
 
-    private void cargarCola(JTextArea txtArea) {
+    private void cargarCola() {
         NodoCola actual = cola.frente;
         if (actual == null) {
             txtArea.setText("La cola está vacía.");
