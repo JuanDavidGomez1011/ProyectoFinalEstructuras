@@ -1,16 +1,15 @@
 package vistas;
 
+import controladores.JugadorController;
 import estructuras.ArbolRankings;
 import estructuras.ColaJugadores;
-import modelo.Jugador;
-
 import javax.swing.*;
 
 public class RegistrarJugador extends JFrame {
 
     private JPanel panel1;
-    private JTextField textField1;
-    private JTextField textField2;
+    private JTextField txtNombre;
+    private JTextField txtCedula;
     private JButton registrarButton;
     private JButton limpiarButton;
     private JButton regresarButton;
@@ -19,51 +18,45 @@ public class RegistrarJugador extends JFrame {
     private ArbolRankings arbol;
 
     public RegistrarJugador(ColaJugadores cola, ArbolRankings arbol) {
-
         this.cola = cola;
         this.arbol = arbol;
 
         setTitle("Registrar Jugador");
         setContentPane(panel1);
-        setSize(450, 350);
+        setSize(450,350);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        registrarButton.addActionListener(e -> {
+        if (registrarButton != null) {
+            registrarButton.addActionListener(e -> {
+                String nombre = txtNombre.getText().trim();
+                String cedula = txtCedula.getText().trim();
 
-            String nombre = textField1.getText().trim();
-            String cedula = textField2.getText().trim();
+                if(nombre.isEmpty() || cedula.isEmpty()){
+                    JOptionPane.showMessageDialog(this, "Complete todos los campos.");
+                    return;
+                }
 
-            if (nombre.isEmpty() || cedula.isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                        "Complete todos los campos.");
-                return;
-            }
+                JugadorController jc = new JugadorController(cola, arbol);
+                boolean registrado = jc.inscribir(nombre, cedula);
 
-            if (arbol.buscar(cedula) != null) {
-                JOptionPane.showMessageDialog(this,
-                        "La cédula ya está registrada.");
-                return;
-            }
+                if(registrado) {
+                    txtNombre.setText("");
+                    txtCedula.setText("");
+                }
+            });
+        }
 
-            Jugador jugador = new Jugador(nombre, cedula);
+        if (limpiarButton != null) {
+            limpiarButton.addActionListener(e -> {
+                txtNombre.setText("");
+                txtCedula.setText("");
+            });
+        }
 
-            cola.enqueue(jugador);
-            arbol.insertar(jugador);
-
-            JOptionPane.showMessageDialog(this,
-                    "Jugador registrado correctamente.");
-
-            textField1.setText("");
-            textField2.setText("");
-        });
-
-        limpiarButton.addActionListener(e -> {
-            textField1.setText("");
-            textField2.setText("");
-        });
-
-        regresarButton.addActionListener(e -> dispose());
+        if (regresarButton != null) {
+            regresarButton.addActionListener(e -> dispose());
+        }
     }
 }

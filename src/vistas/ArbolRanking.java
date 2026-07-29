@@ -8,11 +8,9 @@ public class ArbolRanking extends JFrame {
     private JPanel panel1;
     private JButton mostarButton;
     private JButton regresarButton;
-
     private ArbolRankings arbol;
 
     public ArbolRanking(ArbolRankings arbol) {
-
         this.arbol = arbol;
 
         setTitle("Árbol de Ranking");
@@ -23,8 +21,7 @@ public class ArbolRanking extends JFrame {
         setResizable(false);
 
         mostarButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this,
-                    arbol.obtenerRanking());
+            JOptionPane.showMessageDialog(this, arbol.obtenerRanking());
         });
 
         regresarButton.addActionListener(e -> dispose());

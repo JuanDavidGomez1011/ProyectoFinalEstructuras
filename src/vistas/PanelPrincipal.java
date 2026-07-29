@@ -3,7 +3,6 @@ package vistas;
 import estructuras.ArbolRankings;
 import estructuras.ColaJugadores;
 import estructuras.ListaPartidas;
-
 import javax.swing.*;
 
 public class PanelPrincipal extends JFrame {
@@ -18,13 +17,11 @@ public class PanelPrincipal extends JFrame {
     private JButton arbolDelRankingButton;
     private JButton salirButton;
 
-    // Estructuras compartidas
     private ColaJugadores cola;
     private ArbolRankings arbol;
     private ListaPartidas historial;
 
     public PanelPrincipal() {
-
         cola = new ColaJugadores();
         arbol = new ArbolRankings();
         historial = new ListaPartidas();
@@ -36,7 +33,6 @@ public class PanelPrincipal extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
-        // Este botón ya no se usa directamente
         registrarResultadoButton.setEnabled(false);
 
         registrarJugadorButton.addActionListener(e -> {
@@ -45,8 +41,7 @@ public class PanelPrincipal extends JFrame {
         });
 
         emparejarJugadorButton.addActionListener(e -> {
-            EmparejarJugador ventana =
-                    new EmparejarJugador(cola, arbol, historial);
+            EmparejarJugador ventana = new EmparejarJugador(cola, arbol, historial);
             ventana.setVisible(true);
         });
 
